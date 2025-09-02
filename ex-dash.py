@@ -296,6 +296,17 @@ def main_application():
                        (df_vis["Dye Finish Date"] <= pd.to_datetime(end_date))
                 df_vis = df_vis.loc[mask]
 
+            # Ensure column exists
+                if 'EndDateTime MAX' in exd_df.columns:
+                   last_updated = pd.to_datetime(exd_df['EndDateTime MAX'], errors='coerce').max()
+                   if pd.notnull(last_updated):
+                      st.sidebar.markdown(
+                         f"<div style='margin-top:2rem; color:#555; font-size:0.9rem;'>"
+                         f"📌 Exhaust Data Last Updated: <strong>{last_updated.strftime('%d/%m/%Y')}</strong>"
+                         f"</div>", 
+                         unsafe_allow_html=True
+                       )
+
             # ... all chart code continues unchanged (kept same as your version) ...
             
             # Helper to prep stacked % data
@@ -501,3 +512,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
